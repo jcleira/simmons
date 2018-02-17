@@ -32,7 +32,7 @@ var client Storer
 //
 // Returns an ORM configuration option func.
 func Init(conn string) error {
-	DB, err := gorm.Open(conn)
+	DB, err := gorm.Open("mysql", conn)
 	if err != nil {
 		return fmt.Errorf("error intializing simmons Database, Err: %v", err)
 	}
@@ -42,6 +42,25 @@ func Init(conn string) error {
 	}
 
 	return nil
+}
+
+// Close closes the database connection for the underlying gorm database.
+//
+// Returns nothing.
+func Close() {
+	if c, ok := client.(*Client); ok {
+		c.DB.Close()
+	}
+}
+
+// Init test initializes simmons with a custom storer, usually intended to be
+// initialized with a simmons.FakeClient with customized funcs for mocking.
+//
+// - storer: A simmons.Storer interface implementer.
+//
+// Returns nothing.
+func InitTest(storer Storer) {
+	client = storer
 }
 
 // Create persists models for first time.
