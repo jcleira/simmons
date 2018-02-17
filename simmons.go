@@ -44,6 +44,16 @@ func Init(conn string) error {
 	return nil
 }
 
+// Init test initializes simmons with a custom storer, usually intended to be
+// initialized with a simmons.FakeClient with customized funcs for mocking.
+//
+// - storer: A simmons.Storer interface implementer.
+//
+// Returns nothing.
+func InitTest(storer Storer) {
+	client = storer
+}
+
 // Create persists models for first time.
 //
 // - model: The model to persists.
