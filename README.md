@@ -1,8 +1,10 @@
 # simmons
 
-![ORM](https://i.imgur.com/HilP6Tp.png)
+[![circle-ci](https://circleci.com/gh/jcleira/simmons.png?style=shield&circle-token=163296a336ca296ee3b0d76152f6db0bb2859a76)](https://circleci.com/gh/jcleira/simmons)
 
 simmons is an ORM / database abstraction for data driven applications.
+
+![ORM](https://i.imgur.com/HilP6Tp.png)
 
 simmons use case is about not trusting an ORM ([gorm.io](http://gorm.io) on this case), and provides a real and a mocked interface implementation for the following CRUD operations:
 
