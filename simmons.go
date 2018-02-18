@@ -2,6 +2,7 @@ package simmons
 
 import (
 	"fmt"
+	"reflect"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -61,6 +62,24 @@ func Close() {
 // Returns nothing.
 func InitTest(storer Storer) {
 	client = storer
+}
+
+// Migrate perfoms auto-migration on the given models, this auto-migrations are
+// a gorm feature, that is not totally recomended.
+//
+// - models: The models to auto-migrate.
+//
+// Returns an error if any
+func Migrate(models ...interface{}) error {
+	for _, model := range models {
+		if c, ok := client.(*Client); ok {
+			if err := c.DB.AutoMigrate(model).Error; err != nil {
+				return fmt.Errorf("error migrating '%v' model", reflect.TypeOf(model))
+			}
+		}
+	}
+
+	return nil
 }
 
 // Create persists models for first time.
